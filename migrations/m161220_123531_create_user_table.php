@@ -26,7 +26,7 @@ class m161220_123531_create_user_table extends Migration
 
         $this->insert('user', [
             'username' => 'admin@admin.admin',
-            'password' => md5('adminadmin'),
+            'password' => md5('adminadmin' . User::SALT),
             'name' => 'Eddard',
             'surname' => 'Stark',
             'birthday' => '2016-12-23',
@@ -35,7 +35,7 @@ class m161220_123531_create_user_table extends Migration
 
         $this->insert('user', [
             'username' => 'user@user.user',
-            'password' => md5('useruser'),
+            'password' => md5('useruser' . User::SALT),
             'name' => 'Tirion',
             'surname' => 'Lanister',
             'birthday' => '2016-12-23',

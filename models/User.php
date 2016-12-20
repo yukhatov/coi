@@ -13,6 +13,8 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     const GROUP_USER = 'USER';
     const GROUP_GUEST = 'GUEST';
 
+    const SALT = "MyUniqueSault";
+
     public function __construct(RegisterForm $model = null)
     {
         if($model)
@@ -20,7 +22,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             $this->name = $model->name;
             $this->surname = $model->surname;
             $this->birthday = $model->birthday;
-            $this->password = md5($model->password);
+            $this->password = md5($model->password . self::SALT);
             $this->username  = $model->username;
             $this->ip = $this->detectIp();
             $this->agent = $this->detectAgent();
@@ -105,12 +107,12 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
      */
     public function validatePassword($password)
     {
-        return $this->password === md5($password);
+        return $this->password === md5($password . self::SALT);
     }
 
     public function setPassword($password)
     {
-        $this->password = md5($password);
+        $this->password = md5($password . self::SALT);
     }
 
     public function getPassword()
